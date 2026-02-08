@@ -123,3 +123,58 @@ def train_per_product(
     out["mae"] = out["mae"].astype(float)
 
     return out
+
+
+def train_from_csv(
+    path: str,
+    lags: list[int] = [1, 7],
+    horizon: int = 1,
+    test_size: float = 0.2,
+    random_state: int | None = None,
+) -> pd.DataFrame:
+    # Load raw data from CSV
+    df = pd.read_csv(path)
+
+    # Reuse the main per-product training pipeline
+    return train_per_product(
+        df=df,
+        lags=lags,
+        horizon=horizon,
+        test_size=test_size,
+        random_state=random_state,
+    )
+
+
+if __name__ == "__main__":
+    import argparse
+
+    # Minimal command line interface
+    parser = argparse.ArgumentParser(description="Train a demand model per product.")
+
+    parser.add_argument("csv_path", type=str, help="Path to input CSV file")
+
+    parser.add_argument("--lags", type=int, nargs="+", default=[1, 7])
+    parser.add_argument("--horizon", type=int, default=1)
+    parser.add_argument("--test-size", type=float, default=0.2)
+    parser.add_argument("--random-state", type=int, default=None)
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="training_results.csv",
+        help="Path to output CSV file",
+    )
+
+    args = parser.parse_args()
+
+    results = train_from_csv(
+        path=args.csv_path,
+        lags=args.lags,
+        horizon=args.horizon,
+        test_size=args.test_size,
+        random_state=args.random_state,
+    )
+
+    # Save results to disk
+    results.to_csv(args.output, index=False)
+
+    print(f"Results written to {args.output}")
