@@ -42,3 +42,51 @@ Not on:
 - deep learning
 - automated feature generation
 - notebook-driven workflows
+
+---
+
+## Run
+
+### Environment
+
+This project uses a Conda environment.
+It is recommended to use Miniforge (as in the CI workflow).
+
+```bash
+conda env create -f environment.yml
+conda activate demand_forecast
+```
+
+### Run tests
+
+```bash
+pytest -q
+```
+
+### Train from a CSV file (CLI)
+
+A minimal comand-line interface is provided
+
+```bash
+python -m src.pipelines.train data/sample_sales.csv \
+  --lags 1 7 \
+  --horizon 1 \
+  --output training_results.csv
+```
+
+The input CSV must contain the following columns:
+
+- `date`
+- `product_id`
+- `sales`
+
+#### Output
+
+The command produces a CSV file with one row per product, containing:
+
+- training status (`ok`, `skipped`, or `error`)
+- MAE on the test split
+- number of training samples
+- number of test samples
+
+Products with insufficient history for the selected lags and horizon are automatically skipped.
