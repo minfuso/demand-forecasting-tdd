@@ -29,3 +29,15 @@ class SalesDataset:
 
     def products(self) -> list[str]:
         return sorted(self.df["product_id"].dropna().unique().tolist())
+
+    def for_product(self, product_id: str) -> pd.DataFrame:
+        df = self.df[self.df["product_id"] == product_id]
+
+        if df.empty:
+            raise ValueError(f"No data for product_id={product_id}")
+
+        return (
+            df[["date", "product_id", "sales"]]
+            .sort_values("date")
+            .reset_index(drop=True)
+        )
