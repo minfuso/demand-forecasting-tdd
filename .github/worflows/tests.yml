@@ -1,0 +1,25 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Conda (Mambaforge)
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-variant: Miniforge3
+          python-version: "3.11"
+          environment-file: environment.yml
+          activate-environment: demand_forecast
+
+      - name: Run tests
+        shell: bash -l {0}
+        run: pytest -q
