@@ -12,10 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Conda (Mambaforge)
+      - name: Set up Conda (Miniforge)
         uses: conda-incubator/setup-miniconda@v3
         with:
-          miniforge-variant: Mambaforge
+          miniforge-variant: Miniforge3
           python-version: "3.11"
           environment-file: environment.yml
           activate-environment: demand_forecast
