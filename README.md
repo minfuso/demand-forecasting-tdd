@@ -8,7 +8,7 @@ The goal is not to build a complex model, but to demonstrate:
 - clean domain-driven structure
 - test-driven development
 - explicit data pipeline
-- reproducibility (conda + docker)
+- reproducibility (conda)
 - separation between domain, data, features and models
 
 ## Scope
