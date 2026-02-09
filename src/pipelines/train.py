@@ -69,9 +69,7 @@ def train_per_product(
             X, y = build_features(hist, lags=lags, horizon=horizon)
 
             # Temporal split (no shuffling)
-            X_train, X_test, y_train, y_test = _time_split(
-                X, y, test_size=test_size
-            )
+            X_train, X_test, y_train, y_test = _time_split(X, y, test_size=test_size)
 
             # Train model
             model = DemandModel(random_state=random_state)

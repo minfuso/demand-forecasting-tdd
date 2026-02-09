@@ -1,3 +1,5 @@
+![CI](https://github.com/minfuso/demand-forecasting-tdd/actions/workflows/tests.yml/badge.svg)
+
 # Demand forecasting – minimal TDD project
 
 This project is a minimal and clean implementation of a demand forecasting
@@ -10,6 +12,16 @@ The goal is not to build a complex model, but to demonstrate:
 - explicit data pipeline
 - reproducibility (conda)
 - separation between domain, data, features and models
+
+## Code quality
+
+This project enforces basic code quality standards:
+
+- Ruff for linting
+- Black for code formatting
+- Pytest for automated tests
+
+All checks are executed automatically in GitHub Actions.
 
 ## Scope
 
@@ -42,8 +54,6 @@ Not on:
 - deep learning
 - automated feature generation
 - notebook-driven workflows
-
----
 
 ## Run
 

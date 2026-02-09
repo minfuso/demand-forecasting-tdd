@@ -6,19 +6,23 @@ from src.pipelines.train import train_per_product
 def test_train_per_product_runs_end_to_end_and_returns_metrics():
     # Product A: 12 days -> OK for lag_7 + horizon=1
     dates_a = pd.date_range("2024-01-01", periods=12, freq="D")
-    df_a = pd.DataFrame({
-        "date": dates_a,
-        "product_id": ["A"] * len(dates_a),
-        "sales": list(range(10, 22)),  # 10..21
-    })
+    df_a = pd.DataFrame(
+        {
+            "date": dates_a,
+            "product_id": ["A"] * len(dates_a),
+            "sales": list(range(10, 22)),  # 10..21
+        }
+    )
 
     # Product B: 8 days -> insufficient history (min_points = 9)
     dates_b = pd.date_range("2024-01-01", periods=8, freq="D")
-    df_b = pd.DataFrame({
-        "date": dates_b,
-        "product_id": ["B"] * len(dates_b),
-        "sales": list(range(5, 13)),  # 5..12
-    })
+    df_b = pd.DataFrame(
+        {
+            "date": dates_b,
+            "product_id": ["B"] * len(dates_b),
+            "sales": list(range(5, 13)),  # 5..12
+        }
+    )
 
     df = pd.concat([df_a, df_b], ignore_index=True)
 

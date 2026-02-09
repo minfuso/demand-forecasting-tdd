@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  pytest:
+  quality:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +19,14 @@ jobs:
           python-version: "3.11"
           environment-file: environment.yml
           activate-environment: demand_forecast
+
+      - name: Ruff (lint)
+        shell: bash -l {0}
+        run: ruff check .
+
+      - name: Black (formatting)
+        shell: bash -l {0}
+        run: black --check .
 
       - name: Run tests
         shell: bash -l {0}

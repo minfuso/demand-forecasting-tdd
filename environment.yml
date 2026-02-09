@@ -6,3 +6,5 @@ dependencies:
   - pandas
   - scikit-learn
   - pytest
+  - black
+  - ruff

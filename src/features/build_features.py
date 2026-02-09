@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Iterable, Tuple
+from typing import Iterable
 
 import pandas as pd
 
@@ -28,7 +28,7 @@ def build_features(
     dff = df.copy()
     dff["date"] = pd.to_datetime(dff["date"], errors="raise")
     dff = dff.sort_values(["product_id", "date"]).reset_index(drop=True)
-    
+
     min_points = max(lags) + horizon + 1
     counts = dff.groupby("product_id").size()
     too_short = counts[counts < min_points]
@@ -57,6 +57,8 @@ def build_features(
     out = dff.dropna(subset=feature_cols + ["target"]).reset_index(drop=True)
 
     X = out[feature_cols].copy()
-    y = out["target"].astype(float)  # float is fine for regression; later we can keep int if desired
+    y = out["target"].astype(
+        float
+    )  # float is fine for regression; later we can keep int if desired
 
     return X, y
